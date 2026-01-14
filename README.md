@@ -6,6 +6,13 @@ polysocket aims to provide a simple and easy to use abstract layer independent o
 
 # What is socket programming?
 Socket programming is a method of Inter-Process Communication(IPC). This can be used to enable communication between processes running on a local machine or over the network. Sockets are essential in the implementation of most modern network protocols like HTTP,FTP,etc.
+<div align=center>
+  
+![Sequence diagram of Sockets server-client](https://miro.medium.com/1*dw4cFoQ2OL2SjybxzU1DHA.jpeg)
+
+[Image source](https://miro.medium.com/1*dw4cFoQ2OL2SjybxzU1DHA.jpeg)
+
+</div>
 
 # Prerequisties
 This project uses `gnu make` for the build system and `gcc` as its C compiler. Please ensure you have these installed on your system otherwise refer to [pre-compiled]() for options to install pre-compiled static libraries.
