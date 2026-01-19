@@ -1,2 +1,4 @@
+# Development Environment
+The windows example applications are developed and tested using [MSYS2](https://www.msys2.org). MSYS2 offers a linux/UNIX development environment while still maintaining the required dependencies to ensure the applications can be compiled.
 # prerequisites
 The WIN32 API is mainly developed with the design of shared/dynamic libraries which can be initialised and de-initialised during runtime. It reduces the need for bloating the file sizes of the application but int turn will force more responsibility onto the developer. The `#pragma comment(lib, "Ws2_32.lib")` is a preprocessor directive that is not compatible with GCC. Visual Studio uses minGW as its compiler for which this directive is supported. For the purpose of compatibility the winsock2 library will be linked using `-lws2_32` as this is supported with GCC.
