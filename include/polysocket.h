@@ -25,6 +25,7 @@
 #endif
 
 //function prototypes
+
 //domain - address family type IPv4, IPv6, etc
 //type - Connection type of socket, SOCK_STREAM, SOCK_DATAGRAM, etc
 //protocol - The protocol that the socket will use i.e. TCP, UDP, etc
