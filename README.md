@@ -17,6 +17,12 @@ Socket programming is a method of Inter-Process Communication(IPC). This can be 
 # Prerequisties
 This project uses `gnu make` for the build system and `gcc` as its C compiler. Please ensure you have these installed on your system otherwise refer to [pre-compiled]() for options to install pre-compiled static libraries.
 
+# Development roadmap
+
+- [ ] Core API - socket(), bind(), listen(), accept(), close()
+- [ ] Error code handling - polysocket_errToStr()
+- [ ] Asynchronous I/O over sockets - select(), poll()
+
 # installation
 _**TBD**_
 
