@@ -3,7 +3,7 @@ CFLAGS=-O3
 
 # Retrieve all source files
 SRCS=$(wildcard *.c)
-BINS=$(SRCS:%.c=%.elf)
+BINS=$(SRCS:%.c=%)
 
 LOCALBIN=../../../bin
 
@@ -12,5 +12,5 @@ all: $(BINS)
 	@echo $(BINS) $(SRCS)
 
 # Pattern rule to convert sources to binaries
-$(BINS): $(SRCS)
+%: %.c
 	$(CC) $(CFLAGS) $< -o $(LOCALBIN)/$(@F)
