@@ -10,15 +10,20 @@
 #include <stdlib.h>
 //WIN32 header for socket functions and data structures
 #include <winsock2.h>
+#include <string.h>
 
 //Preprocessor directive to link dynamic library into the application
 //Can be done using make just added here for the purpose of the tutorial
 #pragma comment(lib, "Ws2_32.lib")
 
+// Testing locally
+#define SERVER "127.0.0.1"
+//Using none standard port
+#define PORT 1500 
 //google server ip address (obtained using Powershell: 'Resolve-DnsName -Name google.com')
-#define SERVER "209.85.202.139"
+//#define SERVER "209.85.202.139"
 //Port for which HTTP service is run on
-#define PORT 80
+//#define PORT 80
 //HTTP request string
 #define HTTP_REQUEST "GET / HTTP/1.1\r\n\r\n"
 
@@ -44,7 +49,7 @@ int main(int argc, char** argv){//start of main method
 		fprintf(stderr,"Error: socket() %ld\n", WSAGetLastError());
 		//deinitialises the WS2_32.lib dynamic library
 		WSACleanup();
-		return EXIT_FAILURE;
+		return EXIT_FAILURE; 
 	}
 	
 	printf("Created socket\n");
@@ -66,14 +71,15 @@ int main(int argc, char** argv){//start of main method
 	//attempt to connect to server
 	result = connect(socketfd, (struct sockaddr *)&serveraddr, sizeof(serveraddr));
 	if(result == SOCKET_ERROR){
-		fprintf(stderr,"Error: connect() %ld\n", WSAGetLastError());
+		fprintf(stderr,"Error: connect	() %ld\n", WSAGetLastError());
 		closesocket(socketfd); //close the socket
 		socketfd = INVALID_SOCKET; //set the referance of socket to invalid
 		WSACleanup();
 		return EXIT_FAILURE;
 	}
 	
-	printf("Connected to google.com\n");
+	//printf("Connected to google.com\n");
+	printf("Connected to server socket\n");
 
 	//buffers for communication over the socket
 	char writeBuffer[100];
@@ -82,7 +88,7 @@ int main(int argc, char** argv){//start of main method
 	char readBuffer[4096];
 
 	//send the HTTP request
-	result = send(socketfd, writeBuffer, sizeof(writeBuffer), 0);
+	result = send(socketfd, writeBuffer, (int)strlen(writeBuffer), 0);
 	if(result == SOCKET_ERROR){
 		fprintf(stderr,"Error send() %ld\n", WSAGetLastError());
 		closesocket(socketfd);//close the socket
@@ -92,11 +98,18 @@ int main(int argc, char** argv){//start of main method
 	}
 
 	//recieve data
-	do{
+	/*do{
 		result = recv(socketfd, readBuffer, sizeof(readBuffer), 0);
 		//print/dump buffer content
 		printf("%s",readBuffer);
 	}while(result > 0);
+	*/
+	// Prevent double printing, recv() does not null terminate the buffer, so we need to do it ourselves
+	while((result = recv(socketfd, readBuffer, sizeof(readBuffer) - 1, 0)) > 0){
+    readBuffer[result] = '\0';
+    printf("%s", readBuffer);
+}
+	
 
 	//close socket
 	closesocket(socketfd);
